@@ -20,7 +20,7 @@ class client {
         operands = new String[2];
 
         operands[0] = args[3];
-        if(operationString.equals("register")) operands[1] = args[4];
+        if(operationString.equals("register") || operationString.equals("REGISTER")) operands[1] = args[4];
 
         client.makeOperation();
     }
@@ -44,7 +44,7 @@ class client {
         socket.receive(p);
         String[] received = handle_packet(p);
         
-        String output = String.format("Client: %s %s %s : %s", client.operationString, client.operands[0], (client.operationString.equals("register") ? client.operands[1] : ""), received[0]);
+        String output = String.format("Client: %s %s %s : %s -> %s %s", client.operationString, client.operands[0], ((client.operationString.equals("register") || client.operationString.equals("REGISTER")) ? client.operands[1] : ""), received[0], received[1], received[2]);
         System.out.println(output);
     }
 

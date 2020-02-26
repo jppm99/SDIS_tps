@@ -54,17 +54,17 @@ public class server {
     }
 
     private static String parse_reply(String[] received){
-        int result = table.size();
+        int result = server.table.size();
         String s2, s1 = received[1];
 
-        if(received[0].equals("REGISTER")){
-            table.put(received[1], received[2]);
+        if(received[0].equals("REGISTER") || received[0].equals("register")){
+            server.table.put(received[1], received[2]);
             s2 = received[2];
         }
-        else if(received[0].equals("LOOKUP")){
-            s2 = table.get(received[1]);
+        else if(received[0].equals("LOOKUP") || received[0].equals("lookup")){
+            s2 = server.table.get(received[1]);
         }
-        else s2 = "\0";
+        else s2 = "";
 
         String reply = String.format("%d %s %s", result, s1, s2);
 
