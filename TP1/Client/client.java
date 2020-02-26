@@ -15,7 +15,7 @@ class client {
         client.port = Integer.parseInt(args[1]);
         client.operationString = args[2];
         
-        client.socket = new DatagramSocket(client.port, client.host);
+        client.socket = new DatagramSocket();
 
         operands = new String[2];
 
