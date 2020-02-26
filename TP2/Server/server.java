@@ -69,6 +69,7 @@ public class server {
         }
         else if(received[0].equals("LOOKUP") || received[0].equals("lookup")){
             s2 = server.table.get(received[1]);
+            if(s2 == null) s2 = "null";
         }
         else s2 = "";
 
