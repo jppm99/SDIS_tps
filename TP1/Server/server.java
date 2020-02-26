@@ -3,7 +3,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Hashtable;
 
-public class server{
+public class server {
     static DatagramSocket socket;
     static Hashtable<String, String> table;
 
