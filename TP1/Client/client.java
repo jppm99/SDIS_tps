@@ -62,7 +62,8 @@ class client {
     private static String[] handle_packet(DatagramPacket packet){
         byte[] rbuf = packet.getData();
 
-        String str = new String(rbuf);
+        //not good nor works with all charsets but it's enough for now
+        String str = new String(rbuf).split("\0")[0];
 
         System.out.println(str);
 

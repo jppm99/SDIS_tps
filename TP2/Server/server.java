@@ -3,7 +3,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Hashtable;
 
-public class server {
+public class Server {
     static DatagramSocket socket;
     static Hashtable<String, String> table;
 
@@ -11,15 +11,26 @@ public class server {
     static InetAddress mcast_addr;
 
     public static void main(String[] args) throws Exception {
-        server.port = Integer.parseInt(args[0]);
-        server.mcast_addr = InetAddress.getByName(args[1]);
-        server.mcast_port = Integer.parseInt(args[2]);
+        Server.port = Integer.parseInt(args[0]);
+        Server.mcast_addr = InetAddress.getByName(args[1]);
+        Server.mcast_port = Integer.parseInt(args[2]);
+
+        Server.advertise();
 
         table = new Hashtable<String, String>();
         
-        server.socket = new DatagramSocket(port);
+        Server.socket = new DatagramSocket(port);
 
         lookup();
+
+    }
+
+    private static void advertise() throws Exception {
+        AdvertiseThread at = new AdvertiseThread();
+        
+        at.init(Server.mcast_addr, Server.mcast_port, Server.port);
+
+        (new Thread(at)).start();
 
     }
 
@@ -52,7 +63,8 @@ public class server {
     private static String[] handle_packet(DatagramPacket packet){
         byte[] rbuf = packet.getData();
 
-        String str = new String(rbuf);
+        //not good nor works with all charsets but it's enough for now
+        String str = new String(rbuf).split("\0")[0];
 
         System.out.println(str);
 
@@ -60,15 +72,15 @@ public class server {
     }
 
     private static String parse_reply(String[] received){
-        int result = server.table.size();
+        int result = Server.table.size();
         String s2, s1 = received[1];
 
         if(received[0].equals("REGISTER") || received[0].equals("register")){
-            server.table.put(received[1], received[2]);
+            Server.table.put(received[1], received[2]);
             s2 = received[2];
         }
         else if(received[0].equals("LOOKUP") || received[0].equals("lookup")){
-            s2 = server.table.get(received[1]);
+            s2 = Server.table.get(received[1]);
             if(s2 == null) s2 = "null";
         }
         else s2 = "";
