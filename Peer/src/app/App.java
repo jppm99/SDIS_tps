@@ -1,3 +1,4 @@
+package app;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -5,7 +6,7 @@ import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-class Client {
+public class App {
 
     static InetAddress server_addr;
     static int server_port;
