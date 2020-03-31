@@ -1,8 +1,7 @@
-package app;
 
 import Control.Controller;
 
-public class App {
+class Client {
 
     public static void main(String[] args) throws Exception {
         parse_args(args);
